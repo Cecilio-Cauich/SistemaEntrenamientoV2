@@ -14,7 +14,12 @@ namespace SistemaEntrenamientoV2.Clases.DataAccess
 {
     public class CLS_CrudCursoDAL
     {
-
+        ///<summary>
+        ///Variable que almacena los datos para la autenticación a la base de datos
+        ///</summary>
+        ///<remarks>
+        ///
+        ///</remarks>
         private string cadenaConexion = "Server=LAPTOP-VKDEVLK3\\SQLEXPRESS;Database=sistemaentrenamientoCC;TrustServerCertificate=True;User Id=sa;Password=Welcome1;";
 
         ///<summary>
@@ -138,7 +143,7 @@ namespace SistemaEntrenamientoV2.Clases.DataAccess
         ///Elimina un registro de la tabla Curso en base de datos a parti del Id que recibe.
         ///</summary>
         ///<return>
-        ///Devuelve un objeto con los datos del registro que encontró.
+        ///
         ///</return>
         public void Delete(int curso_id)
         {
@@ -212,10 +217,10 @@ namespace SistemaEntrenamientoV2.Clases.DataAccess
         }
 
         ///<summary>
-        ///Busca los registro que cumplan con cierto filtro
+        ///Obtiene todos los registro de la tabla curso
         ///</summary>
         ///<return>
-        ///Devuelve una lista de objetos que cumplan con el filtro
+        ///Devuelve una lista con objetos que contiene la información de cada registro de la tabla
         ///</return>
         public List<CLS_CrudCursoInfo> GetAll()
         {
@@ -257,6 +262,12 @@ namespace SistemaEntrenamientoV2.Clases.DataAccess
 
         }
         #region Helpers
+        ///<summary>
+        ///Obtiene los datos de la tabla de Programa
+        ///</summary>
+        ///<return>
+        ///Devuelve una lista con únicamente el atributo "titulo" de la tabla Programa
+        ///</return>
         public List<string> getProgramsTitle()
         {
             string SqlConsulta = "SELECT * from Programa";

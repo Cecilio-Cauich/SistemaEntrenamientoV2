@@ -14,11 +14,16 @@ namespace SistemaEntrenamientoV2.Clases.BusinessLogic
     public class CLS_CrudCursoBAL
     {
 
-
+        ///<summary>
+        ///Objeto que se usa para acceder a la capa de datos
+        ///</summary>
+        ///<remarks>
+        ///
+        ///</remarks>
         CLS_CrudCursoDAL objCursoDAL = new CLS_CrudCursoDAL();
 
         ///<summary>
-        ///Buscar un registro con el Id que se le proporciona en la tabla Programa de la base de datos.
+        ///Buscar un curso con el Id que se le proporciona como parámetro
         ///</summary>
         ///<return>
         ///Devuelve un objeto con los datos del registro que encontró.
@@ -32,10 +37,10 @@ namespace SistemaEntrenamientoV2.Clases.BusinessLogic
         }
 
         ///<summary>
-        ///Buscar un registro con el Id que se le proporciona en la tabla Programa de la base de datos.
+        ///IGuarada o actualiza un registro de cursos
         ///</summary>
         ///<return>
-        ///Devuelve un objeto con los datos del registro que encontró.
+        ///Devuelve el Id del objeto que guaradó o en caso del objeto que se actualizó
         ///</return>
         public int Save(CLS_CrudCursoInfo objCurso)
         {
@@ -63,16 +68,15 @@ namespace SistemaEntrenamientoV2.Clases.BusinessLogic
         ///</return>
         public void deleteCourse(int Id)
         {
-            
             objCursoDAL.Delete(Id);
         }
 
 
         ///<summary>
-        ///Eliminar un registro de la tabla cursos en la base de datos
+        ///Busca registros de acuerdo al filtro que se le pase como parámetro
         ///</summary>
         ///<return>
-        ///
+        ///Devuelve una lista de objetos con los datos de cada registro de cursos
         ///</return>
         public List<CLS_CrudCursoInfo> FindWithFilter(string filtro)
         {
@@ -80,7 +84,12 @@ namespace SistemaEntrenamientoV2.Clases.BusinessLogic
             cursosFiltrados = objCursoDAL.FindBy(filtro);
             return cursosFiltrados;
         }
-
+        ///<summary>
+        ///Obtiene todos los registros disponibles de cursos
+        ///</summary>
+        ///<return>
+        ///Retorna una lista de objetos con los datos de cada registro de cursos
+        ///</return>
         public List<CLS_CrudCursoInfo> Refrescar()
         {
             List<CLS_CrudCursoInfo> listCursos = new List<CLS_CrudCursoInfo>();
@@ -91,6 +100,12 @@ namespace SistemaEntrenamientoV2.Clases.BusinessLogic
 
 
         #region Helpers
+        ///<summary>
+        ///Obtiene los titulos de los programas
+        ///</summary>
+        ///<return>
+        ///Devuelve una lista de titulos de programa
+        ///</return>
         public List<string> ListaDeOpciones()
         {
             return objCursoDAL.getProgramsTitle();

@@ -87,6 +87,12 @@ namespace SistemaEntrenamientoV2
 
 
         #region HELPER
+        ///<summary>
+        ///Obtiene el Id de elemento seleccionado en el Grid
+        ///</summary>
+        ///<return>
+        ///D
+        ///</return>
         private int? GetId()
         {
             try
@@ -102,7 +108,12 @@ namespace SistemaEntrenamientoV2
             }
 
         }
-
+        ///<summary>
+        ///Carga las opciones en el combobox
+        ///</summary>
+        ///<return>
+        ///
+        ///</return>
         private void loadOption()
         {
             List<string> opciones = new List<string>();

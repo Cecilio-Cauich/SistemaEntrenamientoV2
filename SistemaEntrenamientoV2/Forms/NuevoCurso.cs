@@ -33,5 +33,10 @@ namespace SistemaEntrenamientoV2.Forms
             MessageBox.Show("Id Elemento Guarado "+IdGuardado.ToString());
             this.Close();
         }
+
+        private void NuevoCurso_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

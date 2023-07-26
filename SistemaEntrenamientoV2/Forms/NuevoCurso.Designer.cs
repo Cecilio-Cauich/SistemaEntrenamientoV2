@@ -131,6 +131,7 @@
             this.Name = "NuevoCurso";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nuevo Curso";
+            this.Load += new System.EventHandler(this.NuevoCurso_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

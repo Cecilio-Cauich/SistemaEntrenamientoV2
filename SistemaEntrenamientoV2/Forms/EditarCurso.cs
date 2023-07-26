@@ -32,6 +32,12 @@ namespace SistemaEntrenamientoV2.Forms
 
         }
         #region Helpers
+        ///<summary>
+        ///Carga los datos en los espacios de texto de la intefaz
+        ///</summary>
+        ///<return>
+        ///
+        ///</return>
         private void CargarDatos()
         {
             CLS_CrudCursoInfo oCurso;
