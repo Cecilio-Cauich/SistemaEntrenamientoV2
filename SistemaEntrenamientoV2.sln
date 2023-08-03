@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaEntrenamientoV2", "SistemaEntrenamientoV2\SistemaEntrenamientoV2.csproj", "{D584A54E-0B86-434F-83A0-E7D890B91246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaEntrenamientoCore", "SistemaEntrenamientoCore\SistemaEntrenamientoCore.csproj", "{013A293C-8FCF-4ED3-8BDE-32AB6551E005}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D584A54E-0B86-434F-83A0-E7D890B91246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D584A54E-0B86-434F-83A0-E7D890B91246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D584A54E-0B86-434F-83A0-E7D890B91246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{013A293C-8FCF-4ED3-8BDE-32AB6551E005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{013A293C-8FCF-4ED3-8BDE-32AB6551E005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{013A293C-8FCF-4ED3-8BDE-32AB6551E005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{013A293C-8FCF-4ED3-8BDE-32AB6551E005}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

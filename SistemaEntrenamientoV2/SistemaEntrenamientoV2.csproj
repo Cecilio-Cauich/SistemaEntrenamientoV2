@@ -46,9 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\BussinesLogic\CLS_CrudCursoBAL.cs" />
-    <Compile Include="Clases\DataAccess\CLS_CrudCursoDAL.cs" />
-    <Compile Include="Clases\EntityLayer\CLS_CrudCursoInfo.cs" />
     <Compile Include="Forms\EditarCurso.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaEntrenamientoCore\SistemaEntrenamientoCore.csproj">
+      <Project>{013a293c-8fcf-4ed3-8bde-32ab6551e005}</Project>
+      <Name>SistemaEntrenamientoCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

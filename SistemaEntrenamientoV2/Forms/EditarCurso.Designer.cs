@@ -51,14 +51,14 @@
             // 
             // txtNivel
             // 
-            this.txtNivel.Location = new System.Drawing.Point(222, 188);
+            this.txtNivel.Location = new System.Drawing.Point(222, 156);
             this.txtNivel.Name = "txtNivel";
             this.txtNivel.Size = new System.Drawing.Size(285, 22);
             this.txtNivel.TabIndex = 17;
             // 
             // txtDuracion
             // 
-            this.txtDuracion.Location = new System.Drawing.Point(222, 156);
+            this.txtDuracion.Location = new System.Drawing.Point(222, 194);
             this.txtDuracion.Name = "txtDuracion";
             this.txtDuracion.Size = new System.Drawing.Size(285, 22);
             this.txtDuracion.TabIndex = 16;
@@ -81,7 +81,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(88, 194);
+            this.label4.Location = new System.Drawing.Point(88, 159);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 16);
             this.label4.TabIndex = 13;
@@ -90,7 +90,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(88, 156);
+            this.label3.Location = new System.Drawing.Point(88, 197);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 16);
             this.label3.TabIndex = 12;
