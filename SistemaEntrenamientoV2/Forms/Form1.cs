@@ -89,14 +89,14 @@ namespace SistemaEntrenamientoV2.Forms
         private void button4_Click(object sender, EventArgs e)
         {
             string valorSeleccionado = comboBox1.SelectedItem.ToString();
-            //string valorSeleccionado = "Básico";
             refresh(valorSeleccionado);
         }
 
 
         #region Helpers
         /// <summary>
-        /// Definición de método que permite obtener de todos los datos de la tabla curso,
+        /// Definición de método que permite obtener de todos los datos de la tabla curso en dado caso
+        /// que reciba un filtro entra en una condición para manejar y poder apicar el filtro
         /// nos sirve para refresacar el grid
         /// </summary>
         private void refresh(string filtro = default)
