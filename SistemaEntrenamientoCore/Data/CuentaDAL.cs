@@ -58,7 +58,7 @@ namespace SistemaEntrenamientoCore.Data
             CuentaInfo.Email = Row[Entity.CuentaInfo.FieldName.Email].ToString();
             CuentaInfo.Genero = Row[Entity.CuentaInfo.FieldName.Genero].ToString(); 
             CuentaInfo.Usuario_Id = Convert.ToInt32(Row[Entity.CuentaInfo.FieldName.Usuario_Id]);
-            CuentaInfo.Fecha_Nacimiento = Convert.ToDateTime(Row[Entity.CuentaInfo.FieldName.Fecha_Nacimiento]);
+            CuentaInfo.Fecha_Nacimiento = Row[Entity.CuentaInfo.FieldName.Fecha_Nacimiento].ToString();
 
             return CuentaInfo;
         }
@@ -88,7 +88,7 @@ namespace SistemaEntrenamientoCore.Data
             sb.Append($",'{CuentaInfo.Apellidos}'");
             sb.Append($",'{CuentaInfo.Email}'");
             sb.Append($",'{CuentaInfo.Genero}'");
-            sb.Append($",'{CuentaInfo.Fecha_Nacimiento}',");
+            sb.Append($",{CuentaInfo.Fecha_Nacimiento},");
             sb.Append($"{CuentaInfo.Usuario_Id}");
             sb.AppendLine(")");
             sb.AppendLine($"update dbconf_bloq set fol_act = fol_act + 1 where des_bloq = '{BookName}'");
@@ -110,13 +110,13 @@ namespace SistemaEntrenamientoCore.Data
         public int Update(Entity.CuentaInfo CuentaInfo)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"update {TableName} set");
+            sb.AppendLine($"update {TableName} set ");
             sb.Append($"{Entity.CuentaInfo.FieldName.Nombres} = '{CuentaInfo.Nombres}'");
             sb.Append($",{Entity.CuentaInfo.FieldName.Apellidos} = '{CuentaInfo.Apellidos}'");
             sb.Append($",{Entity.CuentaInfo.FieldName.Email} = '{CuentaInfo.Email}'");
             sb.Append($",{Entity.CuentaInfo.FieldName.Genero} = '{CuentaInfo.Genero}'");
             sb.Append($",{Entity.CuentaInfo.FieldName.Fecha_Nacimiento} = '{CuentaInfo.Fecha_Nacimiento}'");
-            sb.Append($",{Entity.CuentaInfo.FieldName.Usuario_Id} = {CuentaInfo.Usuario_Id}");
+            sb.Append($",{Entity.CuentaInfo.FieldName.Usuario_Id} = '{CuentaInfo.Usuario_Id}'");
             sb.Append($"where {Entity.CuentaInfo.FieldName.Id} = {CuentaInfo.Id}");
             Utilerias.SQLHelper.ExecuteNonQuery(sb.ToString(), ConnectionString);
             return CuentaInfo.Id;
@@ -149,18 +149,24 @@ namespace SistemaEntrenamientoCore.Data
             Entity.CuentaInfo nCuenta = new Entity.CuentaInfo();
 
             //Se generó un nuevo objeto para comparar y detectar las variaciones
-            if (string.Compare(CuentaInfo.FieldName.Nombres, nCuenta.Nombres, true) != 0)
+            if (string.Compare(CuentaInfo.Nombres, nCuenta.Nombres, true) != 0)
                 Filter += $" and {Entity.CuentaInfo.FieldName.Nombres} = '{CuentaInfo.Nombres}'";
-            if (string.Compare(Entity.CuentaInfo.FieldName.Apellidos, nCuenta.Apellidos, true) != 0)
+
+            if (string.Compare(CuentaInfo.Apellidos, nCuenta.Apellidos, true) != 0)
                 Filter += $" and {Entity.CuentaInfo.FieldName.Apellidos} = '{CuentaInfo.Apellidos}'";
-            if (string.Compare(CuentaInfo.FieldName.Email, nCuenta.Email, true) != 0)
-                Filter = $" and {Entity.CuentaInfo.FieldName.Email} = '{CuentaInfo.Email}'";
-            if (string.Compare(Entity.CuentaInfo.FieldName.Genero, nCuenta.Genero, true) != 0)
-                Filter += $" and '{Entity.CuentaInfo.FieldName.Genero}' = '{CuentaInfo.Genero}'";
-            if (DateTime.Compare(Convert.ToDateTime(CuentaInfo.FieldName.Fecha_Nacimiento),nCuenta.Fecha_Nacimiento) !=0)
-                Filter += $" and '{Entity.CuentaInfo.FieldName.Fecha_Nacimiento}' = '{CuentaInfo.Fecha_Nacimiento}'";
+
+            if (string.Compare(CuentaInfo.Email, nCuenta.Email, true) != 0)
+                Filter += $" and {Entity.CuentaInfo.FieldName.Email} = '{CuentaInfo.Email}'";
+
+            if (string.Compare(CuentaInfo.Genero, nCuenta.Genero, true) != 0)
+                Filter += $" and {Entity.CuentaInfo.FieldName.Genero} = '{CuentaInfo.Genero}'";
+
+            if (string.Compare(CuentaInfo.Fecha_Nacimiento,nCuenta.Fecha_Nacimiento, true) !=0)
+                Filter += $" and {Entity.CuentaInfo.FieldName.Fecha_Nacimiento} = '{CuentaInfo.Fecha_Nacimiento}'";
+
             if(CuentaInfo.Usuario_Id != CuentaInfo.Usuario_Id)
-                Filter += $" and '{Entity.CuentaInfo.FieldName.Usuario_Id}' = '{CuentaInfo.Usuario_Id}'";
+                Filter += $" and {Entity.CuentaInfo.FieldName.Usuario_Id} = '{CuentaInfo.Usuario_Id}'";
+
             if (CuentaInfo.Id != nCuenta.Id)
                 Filter += $" and {Entity.CuentaInfo.FieldName.Id} = {nCuenta.Id}";
 

@@ -12,7 +12,7 @@ namespace SistemaEntrenamientoCore.Entity
         public class FieldName
         {
             public const string Id = "NUM_DOC";
-            public const string Titulo = "Titulo";
+            public const string Titulo = "titulo";
             public const string Descripcion = "descripcion";
         }
         #endregion

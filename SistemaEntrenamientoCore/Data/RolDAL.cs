@@ -33,7 +33,7 @@ namespace SistemaEntrenamientoCore.Data
         {
             if (Id == 0) throw new ArgumentNullException("No se recibió el Id");
 
-            string SqlStatement = $"SELECT nombre FROM {TableName} where {Entity.RolInfo.FieldName.Id}= {Id}";
+            string SqlStatement = $"SELECT NUM_DOC,nombre FROM {TableName} where {Entity.RolInfo.FieldName.Id}= {Id}";
             DataTable dt = Utilerias.SQLHelper.ExecuteDataTable(SqlStatement, ConnectionString);
             return GetEntityObject(dt.Rows[0]);
         }
@@ -64,15 +64,15 @@ namespace SistemaEntrenamientoCore.Data
         {
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"declare @Id");
-            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = {BookName}");
+            sb.AppendLine($"declare @Id int");
+            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = '{BookName}'");
             sb.AppendLine($"INSERT INTO {TableName}(NUM_DOC,");
-            sb.Append($"{RolInfo.FieldName.Nombre},");
+            sb.Append($"{RolInfo.FieldName.Nombre}");
             sb.AppendLine(")");
-            sb.AppendLine("values(@Id,");
-            sb.Append($"{RolInfo.Nombre},");
+            sb.AppendLine(" values (@Id,");
+            sb.Append($"'{RolInfo.Nombre}'");
             sb.Append(")");
-            sb.AppendLine($"update dbconf_bloq set fol_act = fol_act + 1 where des_bloq = '{BookName}'");
+            sb.AppendLine($" update dbconf_bloq set fol_act = fol_act + 1 where des_bloq = '{BookName}'");
             sb.AppendLine("SELECT SCOPE_IDENTITY()");
 
 
@@ -92,9 +92,9 @@ namespace SistemaEntrenamientoCore.Data
         public int Update(RolInfo RolInfo)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"UPDATE {TableName} SET(");
-            sb.Append($"{RolInfo.FieldName.Nombre} = {RolInfo.Nombre}");
-            sb.Append($"Where {RolInfo.FieldName.Id} = {RolInfo.Id}");
+            sb.AppendLine($"UPDATE {TableName} SET ");
+            sb.Append($"{RolInfo.FieldName.Nombre} = '{RolInfo.Nombre}'");
+            sb.Append($" Where {RolInfo.FieldName.Id} = {RolInfo.Id}");
 
             Utilerias.SQLHelper.ExecuteNonQuery(sb.ToString(), ConnectionString);
             return RolInfo.Id;
@@ -129,7 +129,7 @@ namespace SistemaEntrenamientoCore.Data
             Entity.RolInfo nRol = new Entity.RolInfo();
 
             if (string.Compare(RolInfo.Nombre, nRol.Nombre, true) != 0)
-                Filter += $" and {Entity.RolInfo.FieldName.Nombre} = {RolInfo.Nombre}";
+                Filter += $" and {Entity.RolInfo.FieldName.Nombre} = '{RolInfo.Nombre}'";
             if (RolInfo.Id != nRol.Id)
                 Filter += $" and {Entity.RolInfo.FieldName.Id} = {RolInfo.Id}";
 

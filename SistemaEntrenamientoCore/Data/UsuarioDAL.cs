@@ -66,18 +66,18 @@ namespace SistemaEntrenamientoCore.Data
         {
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"declare @Id");
-            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = {BookName}");
-            sb.AppendLine($"INSERT INTO {TableName}(NUM_DOC,");
+            sb.AppendLine($"declare @Id int");
+            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = '{BookName}'");
+            sb.AppendLine($"INSERT INTO {TableName} (NUM_DOC,");
             sb.Append($"{UsuarioInfo.FieldName.Usuario},");
             sb.Append($"{UsuarioInfo.FieldName.Contrasenia},");
-            sb.Append($"{UsuarioInfo.FieldName.Rol},");
+            sb.Append($"{UsuarioInfo.FieldName.Rol}");
             sb.AppendLine(")");
             sb.AppendLine("values(@Id,");
             sb.Append($"'{UsuarioInfo.Usuario}',");
             sb.Append($"'{UsuarioInfo.Contrasenia}',");
-            sb.Append($"{UsuarioInfo.Rol},");
-            sb.Append(")");
+            sb.Append($"{UsuarioInfo.Rol}");
+            sb.AppendLine(")");
             sb.AppendLine($"update dbconf_bloq set fol_act = fol_act + 1 where des_bloq = '{BookName}'");
             sb.AppendLine("SELECT SCOPE_IDENTITY()");
 
@@ -98,10 +98,10 @@ namespace SistemaEntrenamientoCore.Data
         public int Update(UsuarioInfo UsuarioInfo)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"UPDATE {TableName} SET(");
-            sb.Append($"{UsuarioInfo.FieldName.Usuario} = {UsuarioInfo.Usuario}");
-            sb.Append($"{UsuarioInfo.FieldName.Contrasenia} = {UsuarioInfo.Contrasenia}");
-            sb.Append($"{UsuarioInfo.FieldName.Rol} = {UsuarioInfo.Rol}");
+            sb.AppendLine($"UPDATE {TableName} SET ");
+            sb.Append($"{UsuarioInfo.FieldName.Usuario} = '{UsuarioInfo.Usuario}',");
+            sb.Append($"{UsuarioInfo.FieldName.Contrasenia} = '{UsuarioInfo.Contrasenia}',");
+            sb.AppendLine($"{UsuarioInfo.FieldName.Rol} = {UsuarioInfo.Rol}");
             sb.Append($"Where {UsuarioInfo.FieldName.Id} = {UsuarioInfo.Id}");
 
             Utilerias.SQLHelper.ExecuteNonQuery(sb.ToString(), ConnectionString);
@@ -139,7 +139,7 @@ namespace SistemaEntrenamientoCore.Data
             Entity.UsuarioInfo nUsuario = new Entity.UsuarioInfo();
 
             if (string.Compare(UsuarioInfo.Usuario, nUsuario.Usuario, true) != 0)
-                Filter += $" and {Entity.UsuarioInfo.FieldName.Usuario} = {UsuarioInfo.Usuario}";
+                Filter += $" and {Entity.UsuarioInfo.FieldName.Usuario} = '{UsuarioInfo.Usuario}'";
             if (UsuarioInfo.Rol != nUsuario.Rol)
                 Filter += $" and {Entity.UsuarioInfo.FieldName.Rol} = {UsuarioInfo.Rol}";
             if (UsuarioInfo.Id != nUsuario.Id)

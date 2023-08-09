@@ -71,9 +71,9 @@ namespace SistemaEntrenamientoCore.Data
         {
             StringBuilder  sb = new StringBuilder();
             sb.AppendLine("declare @Id int");
-            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = {BookName}");
-            sb.AppendLine($"insert into {TableName}(NUM_DOC,");
-            sb.Append($"{Entity.ProgramaInfo.FieldName.Titulo}");
+            sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = '{BookName}'");
+            sb.AppendLine($"insert into {TableName} (NUM_DOC,");
+            sb.Append($"{Entity.ProgramaInfo.FieldName.Titulo}, ");
             sb.Append($"{Entity.ProgramaInfo.FieldName.Descripcion}");
             sb.AppendLine(")");
             sb.AppendLine("values(@Id,");
@@ -99,9 +99,9 @@ namespace SistemaEntrenamientoCore.Data
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"update {TableName} set");
-            sb.Append($"{ProgramaInfo.FieldName.Titulo} = '{ProgramaInfo.Titulo}'");
+            sb.Append($"{ProgramaInfo.FieldName.Titulo} = '{ProgramaInfo.Titulo}',");
             sb.Append($"{ProgramaInfo.FieldName.Descripcion} = '{ProgramaInfo.Descripcion}'");
-            sb.AppendLine($"where {ProgramaInfo.FieldName.Id} = {ProgramaInfo.Id}");
+            sb.AppendLine($" where {ProgramaInfo.FieldName.Id} = {ProgramaInfo.Id}");
 
             Utilerias.SQLHelper.ExecuteNonQuery(sb.ToString(),ConnectionString);  
             return ProgramaInfo.Id;
@@ -141,14 +141,14 @@ namespace SistemaEntrenamientoCore.Data
             Entity.ProgramaInfo nPrograma= new Entity.ProgramaInfo();
 
             if (string.Compare(ProgramaInfo.Titulo, nPrograma.Titulo, true) != 0)
-                Filter += $" and {Entity.ProgramaInfo.FieldName.Titulo} =  '{nPrograma.Titulo}'";
-            if (string.Compare(ProgramaInfo.Descripcion, nPrograma.Descripcion, true) != 0)
-                Filter += $" and {Entity.ProgramaInfo.FieldName.Descripcion} = '{nPrograma.Descripcion}'";
+                Filter += $" and {Entity.ProgramaInfo.FieldName.Titulo} =  '{ProgramaInfo.Titulo}'";
+            if (string.Compare(ProgramaInfo.Descripcion, ProgramaInfo.Descripcion, true) != 0)
+                Filter += $" and {Entity.ProgramaInfo.FieldName.Descripcion} = '{ProgramaInfo.Descripcion}'";
             if (ProgramaInfo.Id != nPrograma.Id)
-                Filter += $" and {Entity.ProgramaInfo.FieldName.Id} = {nPrograma.Id}";
+                Filter += $" and {Entity.ProgramaInfo.FieldName.Id} = {ProgramaInfo.Id}";
             
             //Definición de setencia sql con filtro dinámico
-            string SQLStatement = $"SELECT * FROM {TableName} where {ProgramaInfo.FieldName.Id} > 0"+Filter;
+            string SQLStatement = $"SELECT * FROM {TableName} where {ProgramaInfo.FieldName.Id} > 0 "+Filter;
             DataTable dt = Utilerias.SQLHelper.ExecuteDataTable(SQLStatement, ConnectionString);
 
             if (dt == null || dt.Rows.Count == 0) return null;

@@ -32,7 +32,7 @@ namespace SistemaEntrenamientoCore.Data
         public Entity.ProgramaCursoInfo GetEntityObject(int Id)
         {
 
-            string SqlStatement = $"SELECT NUM_DOC,programa_id, curso_id,  FROM {TableName} where {Entity.ProgramaCursoInfo.FieldName.Id}= {Id}";
+            string SqlStatement = $"SELECT NUM_DOC,programa_id, curso_id FROM {TableName} where {Entity.ProgramaCursoInfo.FieldName.Id}= {Id}";
             DataTable dt = Utilerias.SQLHelper.ExecuteDataTable(SqlStatement, ConnectionString);
             return GetEntityObject(dt.Rows[0]);
         }
@@ -66,9 +66,9 @@ namespace SistemaEntrenamientoCore.Data
         public int Insert(ProgramaCursoInfo ProgramCursoInfo)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"declare @Id");
+            sb.AppendLine($"declare @Id int");
             sb.AppendLine($"select @Id = fol_act from dbconf_bloq where des_bloq = {BookName}");
-            sb.AppendLine($"INSERT INTO {TableName}(NUM_DOC,");
+            sb.AppendLine($"INSERT INTO {TableName} (NUM_DOC,");
             sb.Append($"{ProgramaCursoInfo.FieldName.curso},");
             sb.Append($"{ProgramaCursoInfo.FieldName.programa}");
             sb.AppendLine(")");
@@ -96,10 +96,10 @@ namespace SistemaEntrenamientoCore.Data
         public int Update(ProgramaCursoInfo ProgramaCursoInfo)
         {
             StringBuilder   sb = new StringBuilder();
-            sb.AppendLine($"UPDATE {TableName} SET(");
-            sb.Append($"{ProgramaCursoInfo.FieldName.curso} = {ProgramaCursoInfo.Curso}");
+            sb.AppendLine($"UPDATE {TableName} SET ");
+            sb.Append($"{ProgramaCursoInfo.FieldName.curso} = {ProgramaCursoInfo.Curso}, ");
             sb.Append($"{ProgramaCursoInfo.FieldName.programa} = {ProgramaCursoInfo.Programa}");
-            sb.Append($"Where {ProgramaCursoInfo.FieldName.Id} = {ProgramaCursoInfo.Id}");
+            sb.Append($" Where {ProgramaCursoInfo.FieldName.Id} = {ProgramaCursoInfo.Id}");
 
             Utilerias.SQLHelper.ExecuteNonQuery(sb.ToString(), ConnectionString);
             return ProgramaCursoInfo.Id;
