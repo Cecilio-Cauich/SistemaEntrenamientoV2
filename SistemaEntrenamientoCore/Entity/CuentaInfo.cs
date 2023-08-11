@@ -23,7 +23,7 @@ namespace SistemaEntrenamientoCore.Entity
             public const string Email = "email";
             [Field(Genero, "Genero", FieldAttribute.eFieldType.Texto, Length = 50)]
             public const string Genero = "genero";
-            [Field(Fecha_Nacimiento, "Fecha de nacimiento", FieldAttribute.eFieldType.Fecha, Length = 50)]
+            [Field(Fecha_Nacimiento, "Fecha de nacimiento", FieldAttribute.eFieldType.Texto, Length = 50)]
             public const string Fecha_Nacimiento = "fecha_nacimient";
             [Field(Usuario_Id, "Id de usuario", FieldAttribute.eFieldType.Numero)]
             public const string Usuario_Id = "usuario_id";

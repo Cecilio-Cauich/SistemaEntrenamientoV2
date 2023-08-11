@@ -33,7 +33,7 @@ namespace SistemaEntrenamientoV2.Forms
         #region Eventos...
         private void Form1_Load(object sender, EventArgs e)
         {
-            refresh();
+            Refresh();
             loadOption();
     
         }
@@ -43,7 +43,7 @@ namespace SistemaEntrenamientoV2.Forms
         {
             NuevoCurso ventanaNuevoCurso = new NuevoCurso();
             ventanaNuevoCurso.ShowDialog();
-            refresh();
+            Refresh();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace SistemaEntrenamientoV2.Forms
             {
                 EditarCurso ventanaEditarCurso = new EditarCurso(Id);
                 ventanaEditarCurso.ShowDialog();
-                refresh();
+                Refresh();
 
             }
 
@@ -82,14 +82,14 @@ namespace SistemaEntrenamientoV2.Forms
             finally
             {
                 Cursor = Cursors.Default;
-                refresh();  
+                Refresh();  
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             string valorSeleccionado = comboBox1.SelectedItem.ToString();
-            refresh(valorSeleccionado);
+            Refresh(valorSeleccionado);
         }
 
 
@@ -99,7 +99,7 @@ namespace SistemaEntrenamientoV2.Forms
         /// que reciba un filtro entra en una condición para manejar y poder apicar el filtro
         /// nos sirve para refresacar el grid
         /// </summary>
-        private void refresh(string filtro = default)
+        private void Refresh(string filtro = default)
         {
             if(filtro != null)
             {
@@ -126,6 +126,8 @@ namespace SistemaEntrenamientoV2.Forms
                 {
                     Cursor = Cursors.WaitCursor;
                     CursoBAL = new SistemaEntrenamientoCore.Business.CursoBAL() { ConnectionString = ConnectioString };
+
+                    List<CursoInfo> list = new List<CursoInfo>();
                     CursosdataGridView1.DataSource = CursoBAL.GetCursos();
 
                 }
@@ -207,7 +209,7 @@ namespace SistemaEntrenamientoV2.Forms
 
         private void button5_Click(object sender, EventArgs e)
         {
-            refresh();
+            Refresh();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

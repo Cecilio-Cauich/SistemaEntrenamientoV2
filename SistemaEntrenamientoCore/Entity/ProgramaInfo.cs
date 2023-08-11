@@ -16,7 +16,7 @@ namespace SistemaEntrenamientoCore.Entity
             [Field(Titulo, "Titulo", FieldAttribute.eFieldType.Texto, Length =50)]
             public const string Titulo = "titulo";
             [Field(Descripcion, "Descripcion", FieldAttribute.eFieldType.Texto, Length = 100)]
-            public const string Descripcion = "descripcion";
+            public const string Descripcion = "Descripcion";
         }
         #endregion
 

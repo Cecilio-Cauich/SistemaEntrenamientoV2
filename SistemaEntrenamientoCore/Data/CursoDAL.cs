@@ -13,29 +13,18 @@ using System.Threading.Tasks;
 
 namespace SistemaEntrenamientoCore.Data
 {
-    public class CursoDAL: SOLTUM.Framework.Data.BookBaseDAL<Entity.CursoInfo, Entity.CursoInfo>
+    public class CursoDAL: SOLTUM.Framework.Data.BookBaseDAL<Entity.CursoInfo, Entity.CursoInfo.FieldName>
     {
-        #region Global Variables...
-       // public const string BookName = "bCurso";
-        public const string TableName = "dbENC76";
-
-        #endregion
-
-        #region Properties
-        public new string ConnectionString
-        {
-            get; set;
-        }
-        #endregion
 
 
         #region Constructor...
         public CursoDAL() : base()
         {
             BookName = "bCurso";
+            
         }
         #endregion
-
+        
 
         #region Methods
 
@@ -53,7 +42,7 @@ namespace SistemaEntrenamientoCore.Data
         {
             //Definición de setencia sql con filtro dinámico
             string SqlStatement = $"SELECT * FROM dbENC76 \r\ninner join dbENC77 \r\non dbENC76.curso_id = dbENC77.programa_curso_\r\ninner join dbENC72 on dbENC72.programa_id = dbENC77.programa_id  \r\nwhere  dbENC72.programa_id> 0 and lower(dbENC72.titulo) = lower('{filtro}')";
-            DataTable dt = SOLTUM.Framework.Utilities.SQLHelper.ExecuteDataTable(SqlStatement, ConnectionString);
+            DataTable dt = SOLTUM.Framework.Utilities.SQLHelper.ExecuteDataTable(SqlStatement, ConnectionString );
 
             if (dt == null || dt.Rows.Count == 0) return null;
 

@@ -22,7 +22,7 @@ namespace SistemaEntrenamientoCore.Entity
             public const string Id = "NUM_DOC";
             [Field(Titulo, "Titulo", FieldAttribute.eFieldType.Texto, Length = 50)]
             public const string Titulo = "titulo";
-            [Field(Descripcion, "Descripcion", FieldAttribute.eFieldType.Texto, Length = 250)]
+            [Field(Descripcion, "descripcion", FieldAttribute.eFieldType.Texto, Length = 250)]
             public const string Descripcion = "descripcion";
             [Field(Nivel, "Nivel", FieldAttribute.eFieldType.Texto, Length = 50)]
             public const string Nivel = "nivel";

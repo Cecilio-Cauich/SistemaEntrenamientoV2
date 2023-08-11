@@ -13,7 +13,7 @@ namespace SistemaEntrenamientoCore.Business
     {
 
         #region Constructor
-        public ProgramaBAL()
+        public ProgramaBAL(): base()
         {
             Version  = "1.0.0.0";
         }

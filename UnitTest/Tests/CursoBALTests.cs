@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SistemaEntrenamientoCore.Business;
+using SistemaEntrenamientoCore.Data;
 using SistemaEntrenamientoCore.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,25 @@ namespace UnitTest.Tests
     [TestClass]
     public class CursoBALTests
     {
+
         #region GetCurso Tests...
+
+        /// <summary>
+        /// Probamos que el métod get curso no regrese cursos el titulo en null
+        /// </summary>
+        [TestMethod]
+        public void GetCourses_ShouldGetAllCourses()
+        {
+            //Arrange
+            CursoBAL cursoBAL = new() { ConnectionString = getConnectionString() };
+
+            //Act
+            List<CursoInfo> ListaDevuelta = new List<CursoInfo>();
+            ListaDevuelta = cursoBAL.GetCursos();
+
+            //Assert
+            Assert.IsNotNull(ListaDevuelta.First().Titulo,"No debe ser null");
+        }
 
         [TestMethod]
         ///Probamos que el método GetCurso retorna un objeto de tipo Curso
@@ -111,10 +130,10 @@ namespace UnitTest.Tests
             return new CursoInfo()
             {
                 Id = 1,
-                Titulo = "Programación orientada a objetos",
-                Descripcion = "Conocer conceptos de la programación orientada a objetos",
+                Titulo = "Curso Demo Actualizado",
+                Descripcion = "Conocer conceptos básico sobre la programación con Demo",
                 Nivel = "Básico",
-                Duracion = 16
+                Duracion = 10
             };
             
         }

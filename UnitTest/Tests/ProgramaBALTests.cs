@@ -13,6 +13,17 @@ namespace UnitTest.Tests
     public class ProgramaBALTests
     {
         #region GetPrograma Tests...
+        [TestMethod]
+        ///Probamos que el método GetProgramas no retorne elementos con el titulo en null
+        public void GetPrograma_ShouldGetPrograms()
+        {
+            //Arrange
+            ProgramaBAL programaBAL = new() { ConnectionString = getConnectionString() };
+            //Act
+            List<ProgramaInfo> Actual = programaBAL.GetProgramas();
+            //Assert
+            Assert.IsNotNull(Actual.First().Titulo, "No es así");
+        }
 
         [TestMethod]
         ///Probamos que el método GetPrograma retorna un objeto de tipo Programa

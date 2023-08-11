@@ -17,16 +17,6 @@ namespace SistemaEntrenamientoCore.Business
     /// </summary>
     public class CursoBAL: SOLTUM.Framework.Business.BookBaseBAL<Entity.CursoInfo, Entity.CursoInfo.FieldName, Data.CursoDAL>
     {
-        #region Variables globales...
-        private CursoDAL cursoDAL;
-        #endregion
-        #region Properties...
-        public new string ConnectionString
-        {
-            get { return cursoDAL.ConnectionString; }
-            set { cursoDAL.ConnectionString = value; }
-        }
-        #endregion
 
         #region Constructor
         public CursoBAL(): base()
@@ -34,7 +24,6 @@ namespace SistemaEntrenamientoCore.Business
 
             Version = "1.0.0.0"; 
 
-            cursoDAL = new CursoDAL();  
         }
         #endregion
 
@@ -63,7 +52,9 @@ namespace SistemaEntrenamientoCore.Business
         /// <returns></returns>
         public List<CursoInfo> GetCursos()
         {
-            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();   
+            List<CursoInfo> ListaDevuelto = new List<CursoInfo>();
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();
+             
         }
 
         /// <summary>
@@ -75,6 +66,7 @@ namespace SistemaEntrenamientoCore.Business
         /// </returns>
         public List<CursoInfo> GetCursosPorPrograma(string Programa)
         {
+            CursoDAL cursoDAL = new CursoDAL() { ConnectionString = ConnectionString };
             if (Programa == null) throw new ArgumentNullException("No recibimos el programa para filtrar");
             return cursoDAL.FindByCP(Programa);
 

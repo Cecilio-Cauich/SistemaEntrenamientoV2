@@ -35,7 +35,7 @@ namespace UnitTest.Tests
         public void GetCuenta_ShouldGetCountWithId() {
 
             //Arrange
-            int IdToSearch = 2;
+            int IdToSearch = 1;
             CuentaInfo Expected = getExampleAccount();
             CuentaBAL cuentaBAL = new () { ConnectionString = getConnectionString() };
             //Act
