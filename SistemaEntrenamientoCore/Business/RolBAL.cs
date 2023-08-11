@@ -8,33 +8,29 @@ using System.Threading.Tasks;
 
 namespace SistemaEntrenamientoCore.Business
 {
-    public class RolBAL
+    public class RolBAL: SOLTUM.Framework.Business.BookBaseBAL<Entity.RolInfo, Entity.RolInfo.FieldName, Data.RolDAL>
     {
-        #region Variables Globales...
-        private RolDAL RolDAL;
-        #endregion
-
-        #region Constructor
-        public RolBAL()
+        public RolBAL(): base()
         {
-            RolDAL = new RolDAL();
+            Version = "1.0.0.0";
         }
-        #endregion
-
-        #region Properties
-        public string ConnectionString
-        {
-            get { return RolDAL.ConnectionString; }
-            set { RolDAL.ConnectionString = value; }
-        }
-        #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Busca un rol de acuerdo a un identificador
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public RolInfo GetRol(int Id)
         {
             if (Id == 0) throw new ArgumentNullException("No recibimos el Id del Rol a buscar");
-            return RolDAL.GetEntityObject(Id);
-        }
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()
+            {
+                new SOLTUM.Framework.Data.Attributes.Condition(Entity.RolInfo.FieldName.Id,"=",Id.ToString())
+             }).FirstOrDefault();
+    }
 
 
         /// <summary>
@@ -45,58 +41,8 @@ namespace SistemaEntrenamientoCore.Business
         /// </returns>
         public List<RolInfo> GetRoles()
         {
-            return RolDAL.FindBy(new RolInfo());
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();
 
-        }
-
-
-        /// <summary>
-        /// Definicion de método que filtra los roles de acuerdo al parámetro filtro que se proporcione al método
-        /// </summary>
-        /// <param name="Rol">Objeto que tiene el filtro a aplicar</param>
-        /// <returns>
-        /// Una lista de objtos con los datos de cada registro encontrado de acuerdo al filtro
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public List<RolInfo> FindBy(RolInfo Rol)
-        {
-            if (Rol == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar el filtro");
-            return RolDAL.FindBy(Rol);
-
-        }
-
-
-        /// <summary>
-        /// Definición de método para el boton de guardar
-        /// </summary>
-        /// <param name="Rol">Objeto que tiene los datos del Rol que se va a guardar</param>
-        /// <returns>
-        /// Devuelve el Id del registro sobre el cual se realizó la operación de guardado o actualización
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public int Save(RolInfo Rol)
-        {
-            if (Rol == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar la acción de guardar");
-            if (Rol.Id == 0)
-                return RolDAL.Insert(Rol);
-            else
-                return RolDAL.Update(Rol);
-
-        }
-
-        /// <summary>
-        /// Definición de método para borrar un rol
-        /// </summary>
-        /// <param name="Id">Idenfiticador del rol a eliminar</param>
-        /// <returns>
-        /// Si se borra el elemento sin problema devuelve true 
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public Boolean Delete(int Id)
-        {
-            if (Id == 0) throw new ArgumentNullException("No recibimos el Id del Rol a Eliminar");
-            RolDAL.Delete(Id);
-            return true;
         }
 
         #endregion

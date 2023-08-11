@@ -8,32 +8,33 @@ using System.Threading.Tasks;
 
 namespace SistemaEntrenamientoCore.Business
 {
-    public class ProgramaCursoBAL
+    public class ProgramaCursoBAL: SOLTUM.Framework.Business.BookBaseBAL<Entity.ProgramaCursoInfo, Entity.ProgramaCursoInfo.FieldName, Data.ProgramaCursoDAL>
     {
-        #region Variables Globales...
-        private ProgramaCursoDAL ProgramaCursoDAL;
-        #endregion
+  
 
         #region Constructor
-        public ProgramaCursoBAL()
+        public ProgramaCursoBAL(): base()
         {
-            ProgramaCursoDAL = new ProgramaCursoDAL();
+            Version = "1.0.0.0";
         }
         #endregion
 
-        #region Properties
-        public string ConnectionString
-        {
-            get { return ProgramaCursoDAL.ConnectionString; }
-            set { ProgramaCursoDAL.ConnectionString = value; }
-        }
-        #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Busca una relacion de programa curso a partir de un identificador
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public ProgramaCursoInfo GetProgramaCurso(int Id)
         {
             if (Id == 0) throw new ArgumentNullException("No recibimos el Id del programacurso a buscar");
-            return ProgramaCursoDAL.GetEntityObject(Id);
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()
+            {
+                new SOLTUM.Framework.Data.Attributes.Condition(Entity.CuentaInfo.FieldName.Id,"=",Id.ToString())
+            }).FirstOrDefault();
         }
 
 
@@ -45,58 +46,8 @@ namespace SistemaEntrenamientoCore.Business
         /// </returns>
         public List<ProgramaCursoInfo> GetProgramasCursos()
         {
-            return ProgramaCursoDAL.FindBy(new ProgramaCursoInfo());
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();
             
-        }
-
-
-        /// <summary>
-        /// Definicion de método que filtra los programacurso de acuerdo al parámetro filtro que se proporcione al método
-        /// </summary>
-        /// <param name="ProgramaCurso">Objeto que tiene el filtro a aplicar</param>
-        /// <returns>
-        /// Una lista de objtos con los datos de cada registro encontrado de acuerdo al filtro
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public List<ProgramaCursoInfo> FindBy(ProgramaCursoInfo ProgramaCurso)
-        {
-            if (ProgramaCurso == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar el filtro");
-            return ProgramaCursoDAL.FindBy(ProgramaCurso);
-
-        }
-
-
-        /// <summary>
-        /// Definición de método para el boton de guardar
-        /// </summary>
-        /// <param name="ProgramaCurso">Objeto que tiene los datos del ProgramaCurso que se va a guardar</param>
-        /// <returns>
-        /// Devuelve el Id del registro sobre el cual se realizó la operación de guardado o actualización
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public int Save(ProgramaCursoInfo ProgramaCurso)
-        {
-            if (ProgramaCurso == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar la acción de guardar");
-            if (ProgramaCurso.Id == 0)
-                return ProgramaCursoDAL.Insert(ProgramaCurso);
-            else
-                return ProgramaCursoDAL.Update(ProgramaCurso);
-
-        }
-
-        /// <summary>
-        /// Definición de método para borrar un programacurso
-        /// </summary>
-        /// <param name="Id">Idenfiticador del programacurso a eliminar</param>
-        /// <returns>
-        /// Si se borra el elemento sin problema devuelve true 
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public Boolean Delete(int Id)
-        {
-            if (Id == 0) throw new ArgumentNullException("No recibimos el Id del programacurso a Eliminar");
-            ProgramaCursoDAL.Delete(Id);
-            return true;
         }
 
         #endregion

@@ -8,24 +8,13 @@ using System.Threading.Tasks;
 
 namespace SistemaEntrenamientoCore.Business
 {
-    public class UsuarioBAL
+    public class UsuarioBAL: SOLTUM.Framework.Business.BookBaseBAL<Entity.UsuarioInfo, Entity.UsuarioInfo.FieldName, Data.UsuarioDAL>
     {
-        #region Variables Globales...
-        private UsuarioDAL UsuarioDAL;
-        #endregion
 
         #region Constructor
-        public UsuarioBAL()
+        public UsuarioBAL(): base()
         {
-            UsuarioDAL = new UsuarioDAL();
-        }
-        #endregion
-
-        #region Properties
-        public string ConnectionString
-        {
-            get { return UsuarioDAL.ConnectionString; }
-            set { UsuarioDAL.ConnectionString = value; }
+            Version  = "1.0.0.0";
         }
         #endregion
 
@@ -33,7 +22,11 @@ namespace SistemaEntrenamientoCore.Business
         public UsuarioInfo GetUsuario(int Id)
         {
             if (Id == 0) throw new ArgumentNullException("No recibimos el Id del usuario a buscar");
-            return UsuarioDAL.GetEntityObject(Id);
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()
+            {
+                new SOLTUM.Framework.Data.Attributes.Condition(Entity.CuentaInfo.FieldName.Id, "=", Id.ToString())
+
+            }).FirstOrDefault();
         }
 
 
@@ -45,57 +38,7 @@ namespace SistemaEntrenamientoCore.Business
         /// </returns>
         public List<UsuarioInfo> GetUsuarios()
         {
-            return UsuarioDAL.FindBy(new UsuarioInfo());
-        }
-
-
-        /// <summary>
-        /// Definicion de método que filtra los usuarios de acuerdo al parámetro filtro que se proporcione al método
-        /// </summary>
-        /// <param name="Usuario">Objeto que tiene el filtro a aplicar</param>
-        /// <returns>
-        /// Una lista de objtos con los datos de cada registro encontrado de acuerdo al filtro
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public List<UsuarioInfo> FindBy(UsuarioInfo Usuario)
-        {
-            if (Usuario == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar el filtro");
-            return UsuarioDAL.FindBy(Usuario);
-
-        }
-
-
-        /// <summary>
-        /// Definición de método para el boton de guardar
-        /// </summary>
-        /// <param name="Usuario">Objeto que tiene los datos del usuario que se va a guardar</param>
-        /// <returns>
-        /// Devuelve el Id del registro sobre el cual se realizó la operación de guardado o actualización
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public int Save(UsuarioInfo Usuario)
-        {
-            if (Usuario == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar la acción de guardar");
-            if (Usuario.Id == 0)
-                return UsuarioDAL.Insert(Usuario);
-            else
-                return UsuarioDAL.Update(Usuario);
-
-        }
-
-        /// <summary>
-        /// Definición de método para borrar un usuario
-        /// </summary>
-        /// <param name="Id">Idenfiticador del usuario a eliminar</param>
-        /// <returns>
-        /// Si se borra el elemento sin problema devuelve true 
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public Boolean Delete(int Id)
-        {
-            if (Id == 0) throw new ArgumentNullException("No recibimos el Id del Usuario a Eliminar");
-            UsuarioDAL.Delete(Id);
-            return true;
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();
         }
 
         #endregion

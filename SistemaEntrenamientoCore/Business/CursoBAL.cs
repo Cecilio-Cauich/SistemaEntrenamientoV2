@@ -1,4 +1,5 @@
-﻿using SistemaEntrenamientoCore.Data;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using SistemaEntrenamientoCore.Data;
 using SistemaEntrenamientoCore.Entity;
 using System;
 using System.Collections.Generic;
@@ -14,41 +15,55 @@ namespace SistemaEntrenamientoCore.Business
     /// <summary>
     /// Definicion de clase que permite exponer métodos de negocios para los cursos
     /// </summary>
-    public class CursoBAL
+    public class CursoBAL: SOLTUM.Framework.Business.BookBaseBAL<Entity.CursoInfo, Entity.CursoInfo.FieldName, Data.CursoDAL>
     {
-        #region Variables Globales...
-        private CursoDAL CursoDAL;
+        #region Variables globales...
+        private CursoDAL cursoDAL;
+        #endregion
+        #region Properties...
+        public new string ConnectionString
+        {
+            get { return cursoDAL.ConnectionString; }
+            set { cursoDAL.ConnectionString = value; }
+        }
         #endregion
 
         #region Constructor
-        public CursoBAL()
+        public CursoBAL(): base()
         {
-            CursoDAL = new CursoDAL(); 
+
+            Version = "1.0.0.0"; 
+
+            cursoDAL = new CursoDAL();  
         }
         #endregion
 
-        #region Properties
-        public string ConnectionString
-        {
-            get { return CursoDAL.ConnectionString; }
-            set { CursoDAL.ConnectionString = value; }
-        }
-        #endregion
+
 
         #region Methods
+        /// <summary>
+        /// Busca un curso a partir de un identificador
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public CursoInfo GetCurso(int Id)
         {
             if(Id == 0) throw new ArgumentNullException("No recibimos el Id del curso a buscar");
-            return CursoDAL.GetEntityObject(Id);
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()
+            {
+                new SOLTUM.Framework.Data.Attributes.Condition(Entity.CuentaInfo.FieldName.Id,"=",Id.ToString())
+
+            }).FirstOrDefault();
         }
 
         /// <summary>
-        /// Definición de método que regresa todos los cursos sin apicar filtro alguno
+        /// Regresa todos los cursos sin apicar filtro alguno
         /// </summary>
         /// <returns></returns>
         public List<CursoInfo> GetCursos()
         {
-            return CursoDAL.FindBy(new CursoInfo());
+            return DataAccessLayer.GetEntityObjects(new List<SOLTUM.Framework.Data.Attributes.Condition>()).ToList();   
         }
 
         /// <summary>
@@ -58,60 +73,12 @@ namespace SistemaEntrenamientoCore.Business
         /// <returns>
         /// Rgresas una lista de objetos con datos de cada registro 
         /// </returns>
-        public List<CursoInfo> GetCursosPorPrograma(string Nivel)
+        public List<CursoInfo> GetCursosPorPrograma(string Programa)
         {
-            if (Nivel == null) throw new ArgumentNullException("No recibimos el nivel para filtrar");
-            return CursoDAL.FindByCP(Nivel);
+            if (Programa == null) throw new ArgumentNullException("No recibimos el programa para filtrar");
+            return cursoDAL.FindByCP(Programa);
 
         }
-        /// <summary>
-        /// Definicion de método que filtra los curso de acuerdo al parámetro filtro que se proporcione al método
-        /// </summary>
-        /// <param name="Curso">Objeto que tiene el filtro a aplicar</param>
-        /// <returns>
-        /// Una lista de objtos con los datos de cada registro encontrado de acuerdo al filtro
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public List<CursoInfo> FindBy(CursoInfo Curso)
-        {
-            if (Curso == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar el filtro");
-            return CursoDAL.FindBy(Curso);
-
-        }
-
-        /// <summary>
-        /// Definición de método para el boton de guardar
-        /// </summary>
-        /// <param name="Curso">Objeto con los datso para guardar</param>
-        /// <returns>
-        /// Devuelve el Id del registro sobre el cual se realizó la operación
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public int Save(CursoInfo Curso)
-        {
-            if (Curso == null) throw new ArgumentNullException("No recibimos el objeto entidad para realizar la acción de guardar");
-           if (Curso.Id == 0)
-                return CursoDAL.Insert(Curso);
-           else
-                return CursoDAL.Update(Curso);
-            
-        }
-
-        /// <summary>
-        /// Definición de método para borrar un curso
-        /// </summary>
-        /// <param name="Id">Idenficador del Curso a eliminar</param>
-        /// <returns>
-        /// Si se borra el elemento sin problema devuelve true 
-        /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public Boolean Delete(int Id)
-        {
-            if (Id == 0) throw new ArgumentNullException("No recibimos el Id del curso a Eliminar");
-            CursoDAL.Delete(Id);
-            return true;
-        }
-
         #endregion
 
 
