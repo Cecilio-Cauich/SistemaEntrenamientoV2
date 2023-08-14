@@ -18,8 +18,9 @@ namespace SistemaEntrenamientoV2.Forms
     public partial class Form1 : Form
     {
         #region Global Variabels
-        private CursoBAL CursoBAL;
-        string ConnectioString = "Server=LAPTOP-VKDEVLK3\\SQLEXPRESS;Database=DbSOLT1129_e;TrustServerCertificate=True;User Id=sa;Password=Welcome1;";
+        private CursoBAL CursoBAL ;
+        //string ConnectionString = "Server=LAPTOP-VKDEVLK3\\SQLEXPRESS;Database=DbSOLT1129_e;TrustServerCertificate=True;User Id=sa;Password=Welcome1;";
+        //string ConnectionString = SOLTUM.Framework.Global.ProjectConnection.DataConnectionString;
         private ProgramaBAL ProgramaBAL;
         #endregion
 
@@ -95,19 +96,21 @@ namespace SistemaEntrenamientoV2.Forms
 
         #region Helpers
         /// <summary>
-        /// Definición de método que permite obtener de todos los datos de la tabla curso en dado caso
-        /// que reciba un filtro entra en una condición para manejar y poder apicar el filtro
-        /// nos sirve para refresacar el grid
+        /// Definición de método que permite obtener de todos los datos de la tabla curso lo que nos permite refresca
+        /// el grid cada vez que sea necesario, en dado caso
+        /// que reciba un filtro se cumple una condición donde esta el algoritmo manejar y poder apicar el filtro
         /// </summary>
         private void Refresh(string filtro = default)
         {
-            if(filtro != null)
+            string ConnectionString = SOLTUM.Framework.Global.ProjectConnection.DataConnectionString;
+
+            if (filtro != null)
             {
-              
+
                 try
                 {
                     Cursor = Cursors.WaitCursor;
-                    CursoBAL = new SistemaEntrenamientoCore.Business.CursoBAL() { ConnectionString = ConnectioString };
+                    CursoBAL = new SistemaEntrenamientoCore.Business.CursoBAL() { ConnectionString = ConnectionString };         
                     CursosdataGridView1.DataSource = CursoBAL.GetCursosPorPrograma(filtro);
 
                 }
@@ -125,8 +128,8 @@ namespace SistemaEntrenamientoV2.Forms
                 try
                 {
                     Cursor = Cursors.WaitCursor;
-                    CursoBAL = new SistemaEntrenamientoCore.Business.CursoBAL() { ConnectionString = ConnectioString };
-
+                    CursoBAL = new SistemaEntrenamientoCore.Business.CursoBAL() { ConnectionString = ConnectionString };
+                   
                     List<CursoInfo> list = new List<CursoInfo>();
                     CursosdataGridView1.DataSource = CursoBAL.GetCursos();
 
@@ -143,6 +146,8 @@ namespace SistemaEntrenamientoV2.Forms
             }
 
         }
+
+
         /// <summary>
         /// Definición de método para saber el Id del elemento seleccionado en el grid
         /// </summary>
@@ -163,6 +168,7 @@ namespace SistemaEntrenamientoV2.Forms
 
         }
 
+
         ///<summary>
         ///Carga las opciones en el combobox
         ///</summary>
@@ -171,16 +177,20 @@ namespace SistemaEntrenamientoV2.Forms
         ///</return>
         private void loadOption()
         {
+            string ConnectionString = SOLTUM.Framework.Global.ProjectConnection.DataConnectionString;
+
             try
             {
                 Cursor = Cursors.WaitCursor;
-                ProgramaBAL = new SistemaEntrenamientoCore.Business.ProgramaBAL() { ConnectionString = ConnectioString };
-               
+                ProgramaBAL = new SistemaEntrenamientoCore.Business.ProgramaBAL() { ConnectionString = ConnectionString };
+             
+
                 List<string> opciones = new List<string>();
                 List<ProgramaInfo> programas = new List<ProgramaInfo>();
 
                 programas = ProgramaBAL.GetProgramas();
 
+                //De la lista de programas extraemos solo los titulos para mostrar en el comboBox
                 programas.ForEach(programa => {
                     opciones.Add(programa.Titulo);
                 });

@@ -21,7 +21,6 @@ namespace SistemaEntrenamientoCore.Data
         public CursoDAL() : base()
         {
             BookName = "bCurso";
-            
         }
         #endregion
         

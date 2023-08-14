@@ -21,12 +21,9 @@ namespace SistemaEntrenamientoCore.Business
         #region Constructor
         public CursoBAL(): base()
         {
-
             Version = "1.0.0.0"; 
-
         }
         #endregion
-
 
 
         #region Methods

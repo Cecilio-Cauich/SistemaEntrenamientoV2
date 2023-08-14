@@ -15,7 +15,8 @@ namespace SistemaEntrenamientoCore.Business
         #region Constructor
         public ProgramaBAL(): base()
         {
-            Version  = "1.0.0.0";
+
+            Version = "1.0.0.0";
         }
         #endregion
 
