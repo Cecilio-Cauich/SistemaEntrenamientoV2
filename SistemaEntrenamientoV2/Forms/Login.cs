@@ -24,13 +24,15 @@ namespace SistemaEntrenamientoV2.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
+            //Obtención de datos de la interfaz
             string user = txtUsuario.Text;
             string pass = txtContrasenia.Text;
 
-            SOLTUM.Framework.Business.UserBAL userBAL = new SOLTUM.Framework.Business.UserBAL() { ConnectionString = SOLTUM.Framework.Global.ProjectConnection.CredentialsConnectionString };
-            bool bandera = userBAL.UserExists(user.ToUpper(), pass.ToUpper());
 
-            if (bandera != false)
+            SOLTUM.Framework.Business.UserBAL userBAL = new SOLTUM.Framework.Business.UserBAL() { ConnectionString = SOLTUM.Framework.Global.ProjectConnection.CredentialsConnectionString };
+
+            if (userBAL.UserExists(user.ToUpper(), pass.ToUpper()))
             {
                 Form1 form1 = new Form1();
                 form1.Show();
